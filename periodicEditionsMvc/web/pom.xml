@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <parent>
+     <groupId>javaCourse.levelTwo</groupId>
+ 	 <artifactId>periodicEditionsMvc</artifactId>
+  	 <version>0.1</version>
+  </parent>
+  
+  <groupId>javaCourse.levelTwo</groupId>
+  <artifactId>web</artifactId>
+  <version>0.1</version>
+  <packaging>war</packaging>
+  <name>web Maven Webapp</name>
+   
+  <properties>
+	<services.version>0.1</services.version>
+	<dao.version>0.1</dao.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+   	<dependency>
+	<groupId>javaCourse.levelTwo</groupId>
+        <artifactId>services</artifactId>
+        <version>${services.version}</version>
+    </dependency>
+	<dependency>
+        <groupId>javaCourse.levelTwo</groupId>
+        <artifactId>dao</artifactId>
+        <version>${dao.version}</version>
+    </dependency>
+  </dependencies>
+  
+  <build>
+  	<pluginManagement>
+        <plugins>
+       		 <plugin>
+       			 <groupId>org.apache.maven.plugins</groupId>
+       			 <artifactId>maven-war-plugin</artifactId>
+     			 <version>2.4</version>
+       			 <configuration>
+       				 <warSourceDirectory>src/main/webapp</warSourceDirectory>
+      				 <warName>periodicEditionsMvc</warName>
+      				 <failOnMissingWebXml>false</failOnMissingWebXml>
+       			 </configuration>
+       		 </plugin>
+        </plugins>
+    </pluginManagement>
+    
+    <finalName>web</finalName>
+  </build>
+  
+</project>
