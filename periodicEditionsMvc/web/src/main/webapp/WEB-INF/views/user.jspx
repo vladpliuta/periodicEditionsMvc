@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:s="http://www.springframework.org/tags/form">
+
+<jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+	<head>
+		<title>User</title>
+	</head>
+	<body>
+		
+		<h3>Периодические издания</h3>
+		<h3>Страница пользователя</h3>
+		<br/>
+		<p>Выберете необходимое действие:</p>
+		 <fieldset>
+		 	<legend>Выбор периодических изданий</legend>
+		 	<form name="PeriodicEditionsUser" method="get" action="periodicEditionsUser">
+		 		<input type="submit" value="Приступить"/>
+			</form>
+		</fieldset>
+		<br/><br/><br/>
+		<form name="Logout" method="POST" action="controller">
+			<input type="hidden" name="command" value="logout"/>
+			Выйти из программы:<br/>
+			<input type="submit" value="logout"/>
+		</form>
+	</body>
+</html>

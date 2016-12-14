@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:s="http://www.springframework.org/tags/form">
+
+<jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>User Payment</title>
+	</head>
+	<body>
+		
+		<h3>Периодические издания</h3>
+		<h3>Вы подписались на ${title} период ${period} </h3>
+		<h3>Сумма платежа ${coast}<h3>
+	</body>
+</html>

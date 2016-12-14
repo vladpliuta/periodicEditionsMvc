@@ -1,44 +1,25 @@
 package javaCourse.levelTwo.controller;
 
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javaCourse.levelTwo.services.ReaderService;
 
 @Controller
-@RequestMapping("/welcom")
 public class MainController {
+	@Autowired
+	private ReaderService readerService;
 
-	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
-		model.addAttribute("greeting", "Hello and welcome");
+		model.addAttribute("greeting", "Добро пожаловать в учебный проект ПЕРИОДИЧЕСКИЕ ИЗДАНИЯ");
 		return "welcome";
-	}
-/*
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
-		return "admin";
-	}
-
-	@RequestMapping(value = "/db", method = RequestMethod.GET)
-	public String dbaPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
-		return "dba";
-	}
-
-	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
-	public String accessDeniedPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
-		return "access-denied";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -46,26 +27,19 @@ public class MainController {
 		return "login";
 	}
 
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null){    
-			new SecurityContextLogoutHandler().logout(request, response, auth);
+	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
+	public String authentication(Model model, @RequestParam(value = "login") String login,
+			@RequestParam(value = "password") String password) {
+		String page = null;
+		String resalt = readerService.checkLogin(login, password);
+		if ("error".equals(resalt)) {
+			model.addAttribute("errorLoginPassMessage", "Неверный логин или пароль");
+			page = "login";
+		} else if ("admin".equals(resalt)) {
+			page = "admin";
+		} else if ("user".equals(resalt)) {
+			page = "user";
 		}
-		return "redirect:/login?logout";
+		return page;
 	}
-
-	private String getPrincipal(){
-		String userName = null;
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails) {
-			userName = ((UserDetails)principal).getUsername();
-		} else {
-			userName = principal.toString();
-		}
-		return userName;
-	}
-*/
-
 }

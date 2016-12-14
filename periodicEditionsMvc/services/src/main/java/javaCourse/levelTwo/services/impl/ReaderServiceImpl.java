@@ -23,7 +23,6 @@ public class ReaderServiceImpl extends BaseService<Reader> implements ReaderServ
 
 	@Override
 	public List<Reader> findAll() {
-
 		List<Reader> readers = null;
 		try {
 			readers = (List<Reader>) readerDao.findAll();
@@ -45,5 +44,30 @@ public class ReaderServiceImpl extends BaseService<Reader> implements ReaderServ
 		}
 		return reader;
 	}
-
+	@Override
+	public String checkLogin (String login, String password){
+		Reader reader = null;
+		String resalt = "error";
+		try {
+			reader = (Reader) readerDao.findByLogin(login);
+			String baseLogin = reader.getLogin();
+			String basePassword = reader.getPassword();
+			int adminFlag = reader.getAdminFlag();
+			if (login.equals(baseLogin) && password.equals(basePassword)) {
+				if (adminFlag == 1) {
+					resalt = "admin";
+					log.info("Find admin " + login);
+				} else {
+					resalt = "user";
+					log.info("Find user " + login);
+				}
+			} else {
+				resalt = "error";
+				log.info("Not check " + login);
+			}
+		} catch (DaoException e) {
+			log.error("Uncheck" + login + e);
+	}
+		return resalt;
+	}
 }

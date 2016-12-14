@@ -39,7 +39,10 @@ public class Payment implements Serializable {
 
 	public Payment() {
 	}
-
+	
+	public Payment(double coast) {
+		this.coast = coast;
+	}
 	public Integer getId() {
 		return id;
 	}

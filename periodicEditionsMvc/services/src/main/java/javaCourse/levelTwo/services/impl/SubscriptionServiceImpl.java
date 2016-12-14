@@ -6,10 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javaCourse.levelTwo.dao.SubscriptionDao;
 import javaCourse.levelTwo.dao.exceptions.DaoException;
-
 import javaCourse.levelTwo.entity.Subscription;
 import javaCourse.levelTwo.services.BaseService;
 import javaCourse.levelTwo.services.SubscriptionService;
@@ -18,7 +16,7 @@ import javaCourse.levelTwo.services.SubscriptionService;
 @Transactional
 public class SubscriptionServiceImpl extends BaseService<Subscription> implements SubscriptionService<Subscription> {
 	private static Logger log = Logger.getLogger(SubscriptionServiceImpl.class);
-	
+
 	@Autowired
 	private SubscriptionDao subscriptionDao;
 
@@ -33,4 +31,5 @@ public class SubscriptionServiceImpl extends BaseService<Subscription> implement
 		}
 		return subscriptions;
 	}
+
 }
