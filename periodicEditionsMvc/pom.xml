@@ -156,6 +156,7 @@
   </dependencies>
  
  <modules>
+ 	<module>entity</module>
    	<module>dao</module>
   	<module>services</module>
   	<module>web</module>

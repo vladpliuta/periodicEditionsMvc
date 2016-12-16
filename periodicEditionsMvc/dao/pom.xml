@@ -15,8 +15,15 @@
 
   
   <properties>
+ 		 <entity.version>0.1</entity.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
+  <dependencies>
+	<dependency>
+        <groupId>javaCourse.levelTwo</groupId>
+        <artifactId>entity</artifactId>
+        <version>${entity.version}</version>
+    </dependency>
+  </dependencies>
   
 </project>
