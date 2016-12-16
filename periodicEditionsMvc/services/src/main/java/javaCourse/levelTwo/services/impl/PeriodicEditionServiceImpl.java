@@ -32,5 +32,20 @@ public class PeriodicEditionServiceImpl extends BaseService<PeriodicEdition>
 			log.error("Error find all perodic editions " + e);
 		}
 		return periodicEditions;
+		/*
+		 public void updateUser(User user) {
+        User entity = dao.findById(user.getId());
+        if(entity!=null){
+            entity.setSsoId(user.getSsoId());
+            if(!user.getPassword().equals(entity.getPassword())){
+                entity.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            entity.setFirstName(user.getFirstName());
+            entity.setLastName(user.getLastName());
+            entity.setEmail(user.getEmail());
+            entity.setUserProfiles(user.getUserProfiles());
+        }
+    }
+		 */
 	}
 }
