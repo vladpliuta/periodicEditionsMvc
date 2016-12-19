@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,7 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reader")
-@NamedQuery(name = "findAll", query = "FROM Reader")
+//@NamedQuery(name = "findAll", query = "FROM Reader")
 public class Reader implements Serializable {
 	private static final long serialVersionUID = 1L;
 

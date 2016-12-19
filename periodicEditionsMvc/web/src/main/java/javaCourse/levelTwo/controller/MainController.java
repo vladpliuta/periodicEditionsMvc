@@ -1,7 +1,12 @@
 package javaCourse.levelTwo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,6 +20,7 @@ import javaCourse.levelTwo.services.ReaderService;
 public class MainController {
 	@Autowired
 	private ReaderService readerService;
+	
 
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
@@ -22,24 +28,17 @@ public class MainController {
 		return "welcome";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String loginPage() {
 		return "login";
 	}
-
-	@RequestMapping(value = "/authentication", method = RequestMethod.POST)
-	public String authentication(Model model, @RequestParam(value = "login") String login,
-			@RequestParam(value = "password") String password) {
-		String page = null;
-		String resalt = readerService.checkLogin(login, password);
-		if ("error".equals(resalt)) {
-			model.addAttribute("errorLoginPassMessage", "Неверный логин или пароль");
-			page = "login";
-		} else if ("admin".equals(resalt)) {
-			page = "admin";
-		} else if ("user".equals(resalt)) {
-			page = "user";
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){    
+			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return page;
+		return "login";
 	}
 }

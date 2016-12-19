@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import javaCourse.levelTwo.dao.BaseDao;
 import javaCourse.levelTwo.dao.ReaderDao;
 import javaCourse.levelTwo.dao.exceptions.DaoException;
+import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.entity.Reader;
 
 @Repository("readerDao")
@@ -29,8 +30,12 @@ public class ReaderDaoImpl extends BaseDao<Reader> implements ReaderDao<Reader> 
 	public List<Reader> findAll() throws DaoException {
 		List<Reader> readers;
 		try {
-			Query query = getSession().createQuery("findAll");
-			readers = (List<Reader>) query.list();
+			//Query query = getSession().createQuery("findAll");
+			//readers = (List<Reader>) query.list();
+			Criteria criteria = getSession().createCriteria(Reader.class);
+			criteria.setFirstResult(0);
+			criteria.setMaxResults(10);
+			readers = (List<Reader>) criteria.list();
 			log.info("Find all readers");
 		} catch (HibernateException e) {
 			log.error("Error find all readers " + e);

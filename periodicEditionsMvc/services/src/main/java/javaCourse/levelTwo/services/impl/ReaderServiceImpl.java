@@ -17,7 +17,7 @@ import javaCourse.levelTwo.services.ReaderService;
 @Transactional
 public class ReaderServiceImpl extends BaseService<Reader> implements ReaderService<Reader> {
 	private static Logger log = Logger.getLogger(ReaderServiceImpl.class);
-	
+
 	@Autowired
 	private ReaderDao readerDao;
 
@@ -44,30 +44,18 @@ public class ReaderServiceImpl extends BaseService<Reader> implements ReaderServ
 		}
 		return reader;
 	}
+
 	@Override
-	public String checkLogin (String login, String password){
-		Reader reader = null;
-		String resalt = "error";
-		try {
-			reader = (Reader) readerDao.findByLogin(login);
-			String baseLogin = reader.getLogin();
-			String basePassword = reader.getPassword();
-			int adminFlag = reader.getAdminFlag();
-			if (login.equals(baseLogin) && password.equals(basePassword)) {
-				if (adminFlag == 1) {
-					resalt = "admin";
-					log.info("Find admin " + login);
-				} else {
-					resalt = "user";
-					log.info("Find user " + login);
-				}
-			} else {
-				resalt = "error";
-				log.info("Not check " + login);
-			}
-		} catch (DaoException e) {
-			log.error("Uncheck" + login + e);
-	}
+	public String getRole(Reader reader) {
+		String resalt = null;
+		int adminFlag = reader.getAdminFlag();
+		if (adminFlag == 1) {
+			resalt = "ADMIN";
+			log.info("Reader is admin");
+		} else if (adminFlag == 0) {
+			resalt = "USER";
+			log.info("Reader is user");
+		}
 		return resalt;
 	}
 }

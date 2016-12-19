@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns:jsp="http://java.sun.com/JSP/Page"
-	  xmlns:c="http://java.sun.com/jsp/jstl/core"
-	  xmlns:s="http://www.springframework.org/tags/form">
-
-<jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+<%@ page language="java" contentType="text/html; charset=utf8"
+	pageEncoding="utf8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>	  
 	<head>
-		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Users list</title>
 		<style type="text/css">
 			table { align: center;

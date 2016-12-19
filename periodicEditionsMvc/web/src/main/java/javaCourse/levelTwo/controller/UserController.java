@@ -13,10 +13,10 @@ import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.services.PaymentService;
 import javaCourse.levelTwo.services.PeriodicEditionService;
 
-@Controller
-@RequestMapping
+//@Controller
+//@RequestMapping
 public class UserController {
-	@Autowired
+	/*@Autowired
 	private PeriodicEditionService periodicEditionService;
 	@Autowired
 	private PaymentService paymentService;
@@ -30,7 +30,7 @@ public class UserController {
 			periodicEdition = periodicEditionsList.get(0);
 		}
 		model.put("periodicEdition", periodicEdition);
-		return "users/periodicEditionsUser";
+		return "user/periodicEditionsUser";
 	}
 
 	@RequestMapping(value = "/subscriptionCreate", method = RequestMethod.GET)
@@ -41,6 +41,6 @@ public class UserController {
 		double coast = paymentService.calculate(issn, period);
 		model.addAttribute("period", period);
 		model.addAttribute("coast", coast);
-		return "users/userPayment";
-	}
+		return "user/userPayment";
+	}*/
 }
