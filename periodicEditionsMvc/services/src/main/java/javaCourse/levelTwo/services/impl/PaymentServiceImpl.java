@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javaCourse.levelTwo.dao.PaymentDao;
 import javaCourse.levelTwo.dao.PeriodicEditionDao;
-import javaCourse.levelTwo.dao.exceptions.DaoException;
 import javaCourse.levelTwo.entity.Payment;
 import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.services.BaseService;
@@ -22,14 +21,11 @@ public class PaymentServiceImpl extends BaseService<Payment> implements PaymentS
 	private PaymentDao paymentDao;
 	@Autowired
 	private PeriodicEditionDao periodicEditionDao;
-	
+
 	@Override
-	public double calculate (int issn, int period) {
-		PeriodicEdition periodicEdition = null;
-		try {
-			periodicEdition = (PeriodicEdition) periodicEditionDao.get(issn);
-		} catch (DaoException e) {
-			}
+	public double calculate(int issn, int period) {
+		PeriodicEdition periodicEdition = (PeriodicEdition) periodicEditionDao.get(issn);
+
 		int discount = 0;
 		switch (period) {
 		case 1:
@@ -46,6 +42,7 @@ public class PaymentServiceImpl extends BaseService<Payment> implements PaymentS
 			break;
 		}
 		double coast = (double) (periodicEdition.getMonthPrice() * period * (100 - discount) / 100);
+		log.info("Coast " + coast);
 		return coast;
 	}
 }

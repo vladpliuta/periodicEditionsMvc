@@ -4,15 +4,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javaCourse.levelTwo.dao.BaseDao;
 import javaCourse.levelTwo.dao.PeriodicEditionDao;
-import javaCourse.levelTwo.dao.exceptions.DaoException;
 import javaCourse.levelTwo.entity.PeriodicEdition;
 
 
@@ -26,18 +24,20 @@ public class PeriodicEditionDaoImpl extends BaseDao<PeriodicEdition> implements 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PeriodicEdition> findAll() throws DaoException {
-		List<PeriodicEdition> periodicEditions;
-		try {
-			Criteria criteria = getSession().createCriteria(PeriodicEdition.class);
-			criteria.setFirstResult(0);
-			criteria.setMaxResults(10);
-			periodicEditions = (List<PeriodicEdition>) criteria.list();
-			log.info("Find all periodic editions");
-		} catch (HibernateException e) {
-			log.error("Error find all perodic editions " + e);
-			throw new DaoException(e);
-		}
+	public List<PeriodicEdition> findAll() {
+		Criteria criteria = getSession().createCriteria(PeriodicEdition.class);
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(10);
+		List<PeriodicEdition> periodicEditions = (List<PeriodicEdition>) criteria.list();
+		log.info("Find all periodic editions");
 		return periodicEditions;
+	}
+
+	@Override
+	public void deleteById(int issn) {
+		Criteria criteria = getSession().createCriteria(PeriodicEdition.class);
+		criteria.add(Restrictions.eq("id", issn));
+		PeriodicEdition periodicEdition = (PeriodicEdition) criteria.uniqueResult();
+		delete(periodicEdition);
 	}
 }

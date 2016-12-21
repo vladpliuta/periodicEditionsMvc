@@ -2,10 +2,8 @@ package javaCourse.levelTwo.dao;
 
 import java.util.List;
 
-import javaCourse.levelTwo.dao.exceptions.DaoException;
-
 public interface ReaderDao<T> extends Dao<T> {
-	List<T> findAll() throws DaoException;
+	List<T> findAll();
 
-	T findByLogin(String login) throws DaoException;
+	T findByLogin(String login);
 }

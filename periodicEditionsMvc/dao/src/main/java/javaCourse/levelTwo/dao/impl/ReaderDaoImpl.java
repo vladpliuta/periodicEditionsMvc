@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
+//import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import javaCourse.levelTwo.dao.BaseDao;
 import javaCourse.levelTwo.dao.ReaderDao;
-import javaCourse.levelTwo.dao.exceptions.DaoException;
-import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.entity.Reader;
 
 @Repository("readerDao")
@@ -27,34 +24,22 @@ public class ReaderDaoImpl extends BaseDao<Reader> implements ReaderDao<Reader> 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Reader> findAll() throws DaoException {
-		List<Reader> readers;
-		try {
-			//Query query = getSession().createQuery("findAll");
-			//readers = (List<Reader>) query.list();
-			Criteria criteria = getSession().createCriteria(Reader.class);
-			criteria.setFirstResult(0);
-			criteria.setMaxResults(10);
-			readers = (List<Reader>) criteria.list();
-			log.info("Find all readers");
-		} catch (HibernateException e) {
-			log.error("Error find all readers " + e);
-			throw new DaoException(e);
-		}
+	public List<Reader> findAll() {
+		// Query query = getSession().createQuery("findAll");
+		// readers = (List<Reader>) query.list();
+		Criteria criteria = getSession().createCriteria(Reader.class);
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(10);
+		List<Reader> readers = (List<Reader>) criteria.list();
+		log.info("Find all readers");
 		return readers;
 	}
 
-	public Reader findByLogin(String login) throws DaoException {
-		Reader reader;
-		try {
-			Criteria criteria = getSession().createCriteria(Reader.class);
-			criteria.add(Restrictions.eq("login", login));
-			reader = (Reader) criteria.uniqueResult();
-			log.info("Find reader with login" + login);
-		} catch (HibernateException e) {
-			log.error("Error find reader with login" + login + e);
-			throw new DaoException(e);
-		}
+	public Reader findByLogin(String login) {
+		Criteria criteria = getSession().createCriteria(Reader.class);
+		criteria.add(Restrictions.eq("login", login));
+		Reader reader = (Reader) criteria.uniqueResult();
+		log.info("Find reader with login" + login);
 		return reader;
 	}
 }

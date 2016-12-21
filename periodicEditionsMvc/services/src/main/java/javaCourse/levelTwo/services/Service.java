@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 
 public interface Service<T> {
-	void saveOrUpdate(T t);
+	void add(T t);
+
+    void update(T t);
 
 	T get(Serializable id);
 

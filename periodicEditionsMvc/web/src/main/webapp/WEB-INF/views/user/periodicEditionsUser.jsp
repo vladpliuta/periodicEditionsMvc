@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf8"
 	pageEncoding="utf8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-  
-<html>	
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Periodic editions admin work</title>
+		<title>Periodic editions user work</title>
 		<style type="text/css">
 			table { align: center;
 				border: medium solid black;
@@ -26,12 +25,13 @@
 			.hide {
     			display: none; 
 			}
-			.hide + label ~ fieldset{
+			.hide + label ~ form{
    				display: none;
 			}
-			.hide:checked + label + fieldset {
+			.hide:checked + label + form {
     			display: block; 
-    		}			
+    		}
+						
 		</style>	
 	</head>
 	<body>
@@ -64,40 +64,25 @@
 				</tr>
 				<tr>
 					<td colspan="6">
-						<c:url var="delete_but" value="/delete-${periodicEdition.id}"/>
-           				<a href="${delete_but}" role="button">Удалить</a>
-					</td>
-				</tr>
+						<input type="checkbox" id="${ status.count }" class="hide"/>
+						<label for="${ status.count }" >Нажмите чтобы подписаться на периодическое издание</label>
+						<form name="subscriptionCreate" method="get" action="subscriptionCreate">
+		 					<input type="hidden" name="idPeriodicEdition" value="${ periodicEdition.id }"/>
+		 					<select name="period" required="required">
+								<option value="1" selected="selected">месяц</option>
+								<option value="3">квартал</option>
+								<option value="6">полугодие</option>
+								<option value="12">год</option>
+							</select>
+							<input type="submit" value="Подписаться"/>
+		 				</form>
+		 			</td>
+		 		</tr>
 			</c:forEach>
-			<tr>
-				<td colspan="7">
-					<input type="checkbox" id="hd-1" class="hide"/>
-   					<label for="hd-1" >Нажмите чтобы добавить периодическое издание</label>
-    				<fieldset>
-		 				<legend>Форма добавления периодического издания</legend>
-						<s:form name="PeriodicEditionCreate" method="post" action="create">
-							<input type="text" name="ISSN" size="8" required="required" autofocus="autofocus" placeholder="00000000" pattern="[0-9]{8}"/>
-							<span>*</span>ISSN<br/>
-							<input type="text" name="title"/>Название
-							<br/>Краткое описание<br/>
-							<textarea name="shortDescription" cols="50" rows="4"></textarea>
-							<br/>
-							<input type="text" name="monthPeriodicity" pattern="[0-9]{1,2}"/>Количество выпусков в месяц
-							<br/>
-							<input type="text" name="monthPrice"/>Стоимость подписки в месяц
-							<br/>
-							<input type="text" name="discountQuarteryear" pattern="[0-9]{0,3}"/>Скидка на квартал
-							<br/>
-							<input type="text" name="discountHalfyear" pattern="[0-9]{0,3}"/>Скидка на полугодие
-							<br/>
-							<input type="submit" value="Добавить"/>
-						</s:form>
-					</fieldset>
-				</td>
-			</tr>
+			
 		</table>
-		
 		<br/><br/><br/>
+		
 		<c:url var="logout_but" value="/logout"/>
         <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>

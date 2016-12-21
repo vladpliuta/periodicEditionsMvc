@@ -47,7 +47,7 @@ public class PeriodicEdition implements Serializable {
 	private Integer discountHalfyear;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "subscriptions", joinColumns = @JoinColumn(name = "ISSN"), inverseJoinColumns = @JoinColumn(name = "id_reader"))
+	@JoinTable(name = "subscription", joinColumns = @JoinColumn(name = "ISSN"), inverseJoinColumns = @JoinColumn(name = "id_reader"))
 	private Set<Reader> readers;
 
 	public PeriodicEdition() {

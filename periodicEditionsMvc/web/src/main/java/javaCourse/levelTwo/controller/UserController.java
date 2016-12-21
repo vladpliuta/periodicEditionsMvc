@@ -13,10 +13,10 @@ import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.services.PaymentService;
 import javaCourse.levelTwo.services.PeriodicEditionService;
 
-//@Controller
-//@RequestMapping
+@Controller
+@RequestMapping
 public class UserController {
-	/*@Autowired
+	@Autowired
 	private PeriodicEditionService periodicEditionService;
 	@Autowired
 	private PaymentService paymentService;
@@ -42,5 +42,5 @@ public class UserController {
 		model.addAttribute("period", period);
 		model.addAttribute("coast", coast);
 		return "user/userPayment";
-	}*/
+	}
 }

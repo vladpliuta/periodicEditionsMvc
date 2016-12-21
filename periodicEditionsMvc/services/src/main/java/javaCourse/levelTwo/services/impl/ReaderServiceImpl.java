@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javaCourse.levelTwo.dao.ReaderDao;
-import javaCourse.levelTwo.dao.exceptions.DaoException;
 import javaCourse.levelTwo.entity.Reader;
 import javaCourse.levelTwo.services.BaseService;
 import javaCourse.levelTwo.services.ReaderService;
@@ -23,25 +22,15 @@ public class ReaderServiceImpl extends BaseService<Reader> implements ReaderServ
 
 	@Override
 	public List<Reader> findAll() {
-		List<Reader> readers = null;
-		try {
-			readers = (List<Reader>) readerDao.findAll();
-			log.info("Find all readers");
-		} catch (DaoException e) {
-			log.error("Error find all readers " + e);
-		}
+		List<Reader> readers = (List<Reader>) readerDao.findAll();
+		log.info("Find all readers");
 		return readers;
 	}
 
 	@Override
 	public Reader findByLogin(String login) {
-		Reader reader = null;
-		try {
-			reader = (Reader) readerDao.findByLogin(login);
-			log.info("Find reader with login" + login);
-		} catch (DaoException e) {
-			log.error("Error find reader with login" + login + e);
-		}
+		Reader reader = (Reader) readerDao.findByLogin(login);
+		log.info("Find reader with login" + login);
 		return reader;
 	}
 

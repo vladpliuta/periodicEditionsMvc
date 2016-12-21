@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javaCourse.levelTwo.dao.PeriodicEditionDao;
-import javaCourse.levelTwo.dao.exceptions.DaoException;
 import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.services.BaseService;
 import javaCourse.levelTwo.services.PeriodicEditionService;
@@ -24,28 +23,23 @@ public class PeriodicEditionServiceImpl extends BaseService<PeriodicEdition>
 
 	@Override
 	public List<PeriodicEdition> findAll() {
-		List<PeriodicEdition> periodicEditions = null;
-		try {
-			periodicEditions = (List<PeriodicEdition>)periodicEditionDao.findAll();
-			log.info("Find all periodic editions");
-		} catch (DaoException e) {
-			log.error("Error find all perodic editions " + e);
-		}
+
+		List<PeriodicEdition> periodicEditions = (List<PeriodicEdition>) periodicEditionDao.findAll();
+		log.info("Find all periodic editions");
 		return periodicEditions;
-		/*
-		 public void updateUser(User user) {
-        User entity = dao.findById(user.getId());
-        if(entity!=null){
-            entity.setSsoId(user.getSsoId());
-            if(!user.getPassword().equals(entity.getPassword())){
-                entity.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-            entity.setFirstName(user.getFirstName());
-            entity.setLastName(user.getLastName());
-            entity.setEmail(user.getEmail());
-            entity.setUserProfiles(user.getUserProfiles());
-        }
-    }
-		 */
+	}
+
+	@Override
+	public void deleteById(int issn) {
+		periodicEditionDao.deleteById(issn);
+		log.info("Delete periodic edition: " + issn);
+	}
+
+	@Override
+	public PeriodicEdition create(PeriodicEdition periodicEdition) {
+		if (periodicEdition != null) {
+			return (PeriodicEdition) periodicEditionDao.add(periodicEdition);
+		}
+		return periodicEdition;
 	}
 }

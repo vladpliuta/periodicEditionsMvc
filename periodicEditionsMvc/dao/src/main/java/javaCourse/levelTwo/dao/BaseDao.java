@@ -1,20 +1,16 @@
 package javaCourse.levelTwo.dao;
 
 import org.apache.log4j.Logger;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javaCourse.levelTwo.dao.exceptions.DaoException;
-
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+
 /**
  * 
- *base CRUD operation with POJO
+ * base CRUD operation with POJO
  * 
  * @author Vladimir Pliuta
  *
@@ -33,37 +29,31 @@ public class BaseDao<T> implements Dao<T> {
 		return sessionFactory.getCurrentSession();
 	}
 
-	public void saveOrUpdate(T t) throws DaoException {
-		try {
-			getSession().saveOrUpdate(t);
-			log.info("Save or update " + t);
-		} catch (HibernateException e) {
-			log.error("Error save or update " + t + " in Dao" + e);
-			throw new DaoException(e);
-		}
+	@Override
+	public T add(T t) {
+		getSession().save(t);
+		log.info("Save " + t);
+		return (T) t;
+	}
+
+	@Override
+	public void update(T t) {
+		getSession().update(t);
+		log.info("Update " + t);
 	}
 
 	@SuppressWarnings("unchecked")
-	public T get(Serializable id) throws DaoException {
-		T t;
-		try {
-			t = (T) getSession().get(getPersistentClass(), id);
-			log.info("Get class by id: " + id);
-		} catch (HibernateException e) {
-			log.error("Error get " + getPersistentClass() + " in Dao" + e);
-			throw new DaoException(e);
-		}
+	@Override
+	public T get(Serializable id) {
+		T t = (T) getSession().get(getPersistentClass(), id);
+		log.info("Get class by id: " + id);
 		return t;
 	}
 
-	public void delete(T t) throws DaoException {
-		try {
-			getSession().delete(t);
-			log.info("Delete:" + t);
-		} catch (HibernateException e) {
-			log.error("Error delete " + getPersistentClass() + " in Dao" + e);
-			throw new DaoException(e);
-		}
+	@Override
+	public void delete(T t) {
+		getSession().delete(t);
+		log.info("Delete:" + t);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

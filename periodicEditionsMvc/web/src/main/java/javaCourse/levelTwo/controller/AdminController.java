@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javaCourse.levelTwo.entity.PeriodicEdition;
 import javaCourse.levelTwo.entity.Reader;
@@ -25,11 +28,6 @@ public class AdminController {
 	public String periodicEditionsAdminPage(ModelMap model) {
 		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll();
 		model.put("periodicEditionsList", periodicEditionsList);
-		PeriodicEdition periodicEdition = new PeriodicEdition();
-		if (periodicEditionsList.size() > 1) {
-			periodicEdition = periodicEditionsList.get(0);
-		}
-		model.put("periodicEdition", periodicEdition);
 		return "admin/periodicEditionsAdmin";
 	}
 
@@ -37,24 +35,31 @@ public class AdminController {
 	public String usersListAdminPage(ModelMap model) {
 		List<Reader> readersList = readerService.findAll();
 		model.put("usersList", readersList);
-		Reader reader = new Reader();
-		if (readersList.size() > 1) {
-			reader = readersList.get(0);
-		}
-		model.put("reader", reader);
 		return "admin/usersList";
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deletePerson(ModelMap model, int id) {
-		periodicEditionService.delete(periodicEditionService.get(id));
+	@RequestMapping(value = "/delete-{periodicEdition.id}", method = RequestMethod.GET)
+	public String deletePeriodicEdition(ModelMap model, @PathVariable(value = "periodicEdition.id") int id) {
+		periodicEditionService.deleteById(id);
 		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll();
 		model.put("periodicEditionsList", periodicEditionsList);
-		PeriodicEdition periodicEdition = new PeriodicEdition();
-		if (periodicEditionsList.size() > 1) {
-			periodicEdition = periodicEditionsList.get(0);
-		}
-		model.put("periodicEdition", periodicEdition);
+		return "admin/periodicEditionsAdmin";
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
+	public String createPeriodicEdition(ModelMap model, @RequestParam(value = "ISSN") int id,
+			@RequestParam(value = "title") String title,
+			@RequestParam(value = "shortDescription") String shortDescription,
+			@RequestParam(value = "monthPeriodicity") int monthPeriodicity,
+			@RequestParam(value = "monthPrice") double monthPrice,
+			@RequestParam(value = "discountQuarteryear") int discountQuarteryear,
+			@RequestParam(value = "discountHalfyear") int discountHalfyear) {
+		PeriodicEdition periodicEdition = new PeriodicEdition(id, title, shortDescription, monthPeriodicity, monthPrice,
+				discountQuarteryear, discountHalfyear);
+		periodicEditionService.create(periodicEdition);
+		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll();
+		model.put("periodicEditionsList", periodicEditionsList);
 		return "admin/periodicEditionsAdmin";
 	}
 }
