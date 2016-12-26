@@ -24,7 +24,7 @@ public class PaymentServiceImpl extends BaseService<Payment> implements PaymentS
 
 	@Override
 	public double calculate(int issn, int period) {
-		PeriodicEdition periodicEdition = (PeriodicEdition) periodicEditionDao.get(issn);
+		PeriodicEdition periodicEdition = (PeriodicEdition) periodicEditionDao.findById(issn);
 
 		int discount = 0;
 		switch (period) {

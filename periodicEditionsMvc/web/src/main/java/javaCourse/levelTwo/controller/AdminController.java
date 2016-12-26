@@ -23,27 +23,68 @@ public class AdminController {
 	private PeriodicEditionService periodicEditionService;
 	@Autowired
 	private ReaderService readerService;
+	private final int defaultPeriodicalsNumber = 3;
+	private final int defaultCurrentPage = 1;
 
 	@RequestMapping(value = "/periodicEditionsAdmin", method = RequestMethod.GET)
 	public String periodicEditionsAdminPage(ModelMap model) {
-		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll();
+		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll(defaultPeriodicalsNumber,
+				defaultCurrentPage);
+		int pagesCount = periodicEditionService.getPageCount(defaultPeriodicalsNumber);
 		model.put("periodicEditionsList", periodicEditionsList);
+		model.put("periodicalsNumber", defaultPeriodicalsNumber);
+		model.put("currentPage", defaultCurrentPage);
+		model.put("pagesCount", pagesCount);
 		return "admin/periodicEditionsAdmin";
 	}
 
-	@RequestMapping(value = "/usersList", method = RequestMethod.GET)
-	public String usersListAdminPage(ModelMap model) {
-		List<Reader> readersList = readerService.findAll();
-		model.put("usersList", readersList);
-		return "admin/usersList";
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
+	public String defaultPageNumber(ModelMap model, @RequestParam(value = "periodicalsNumber") int periodicalsNumber) {
+		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll(periodicalsNumber,
+				defaultCurrentPage);
+		int pagesCount = periodicEditionService.getPageCount(periodicalsNumber);
+		model.put("periodicEditionsList", periodicEditionsList);
+		model.put("periodicalsNumber", periodicalsNumber);
+		model.put("currentPage", defaultCurrentPage);
+		model.put("pagesCount", pagesCount);
+		return "admin/periodicEditionsAdmin";
 	}
 
-	@RequestMapping(value = "/delete-{periodicEdition.id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/pageNumber", method = RequestMethod.GET)
+	public String pageNumber(ModelMap model, @RequestParam(value = "periodicalsNumber") int periodicalsNumber,
+			@RequestParam(value = "currentPage") int currentPage) {
+		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll(periodicalsNumber, currentPage);
+		int pagesCount = periodicEditionService.getPageCount(periodicalsNumber);
+		model.put("periodicEditionsList", periodicEditionsList);
+		model.put("periodicalsNumber", periodicalsNumber);
+		model.put("currentPage", currentPage);
+		model.put("pagesCount", pagesCount);
+		return "admin/periodicEditionsAdmin";
+	}
+
+	@RequestMapping(value = "/readers", method = RequestMethod.GET)
+	public String usersListAdminPage(ModelMap model) {
+		List<Reader> readers = readerService.findAll();
+		model.put("readers", readers);
+		return "admin/readers";
+	}
+
+	@RequestMapping(value = "/delete/periodic-{periodicEdition.id}", method = RequestMethod.GET)
 	public String deletePeriodicEdition(ModelMap model, @PathVariable(value = "periodicEdition.id") int id) {
 		periodicEditionService.deleteById(id);
 		List<PeriodicEdition> periodicEditionsList = periodicEditionService.findAll();
 		model.put("periodicEditionsList", periodicEditionsList);
 		return "admin/periodicEditionsAdmin";
+	}
+
+	@RequestMapping(value = "/delete/reader-{reader.login}", method = RequestMethod.GET)
+	public String deleteUser(ModelMap model, @PathVariable(value = "reader.login") String login) {
+		Reader reader = (Reader) readerService.findByLogin(login);
+		int id = reader.getId();
+		readerService.deleteById(id);
+		List<Reader> readers = readerService.findAll();
+		model.put("readers", readers);
+		return "admin/readers";
 	}
 
 	@SuppressWarnings("unchecked")

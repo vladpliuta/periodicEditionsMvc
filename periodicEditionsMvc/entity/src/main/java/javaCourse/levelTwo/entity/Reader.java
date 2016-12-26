@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  * 
  * POJO reader
@@ -26,7 +29,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reader")
-//@NamedQuery(name = "findAll", query = "FROM Reader")
+// @NamedQuery(name = "findAll", query = "FROM Reader")
+// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Reader implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,20 +51,25 @@ public class Reader implements Serializable {
 	@Column(name = "admin_flag")
 	private Integer adminFlag;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_address")
 	private Address address;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "subscriptions", 
-		joinColumns = @JoinColumn(name = "id_reader"), 
-		inverseJoinColumns = @JoinColumn(name = "ISSN"))
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinTable(name = "subscription", joinColumns = @JoinColumn(name = "id_reader"), inverseJoinColumns = @JoinColumn(name = "ISSN"))
 	private Set<PeriodicEdition> periodicEditions;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reader")
 	private Set<Payment> payments;
 
 	public Reader() {
+	}
+
+	public Reader(String surname, String forename, String login, String password) {
+		this.surname = surname;
+		this.forename = forename;
+		this.login = login;
+		this.password = password;
 	}
 
 	public Integer getId() {

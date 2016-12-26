@@ -6,4 +6,6 @@ public interface ReaderDao<T> extends Dao<T> {
 	List<T> findAll();
 
 	T findByLogin(String login);
+
+	void deleteById(int id);
 }

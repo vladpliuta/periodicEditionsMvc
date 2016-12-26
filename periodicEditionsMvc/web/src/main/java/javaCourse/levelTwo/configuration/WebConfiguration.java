@@ -55,10 +55,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		registry.addInterceptor(interceptor);
 	}
 
-	/*
-	 * Configure ResourceHandlers to serve static resources : CSS/ js / img
-	 *
-	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/WEB-INF/views/**").addResourceLocations("/views/");

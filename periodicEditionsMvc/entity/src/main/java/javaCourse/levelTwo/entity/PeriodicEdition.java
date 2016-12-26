@@ -13,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  * 
  * POJO periodic edition
@@ -22,6 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "periodic_edition")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class PeriodicEdition implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +50,7 @@ public class PeriodicEdition implements Serializable {
 	@Column(name = "discount_halfyear")
 	private Integer discountHalfyear;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinTable(name = "subscription", joinColumns = @JoinColumn(name = "ISSN"), inverseJoinColumns = @JoinColumn(name = "id_reader"))
 	private Set<Reader> readers;
 

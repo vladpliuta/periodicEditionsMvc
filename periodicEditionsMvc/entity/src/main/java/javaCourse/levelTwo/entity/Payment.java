@@ -30,7 +30,7 @@ public class Payment implements Serializable {
 	@Column(name = "id_payment", unique = true, nullable = false)
 	private Integer id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_reader")
 	private Reader reader;
 
@@ -39,10 +39,11 @@ public class Payment implements Serializable {
 
 	public Payment() {
 	}
-	
+
 	public Payment(double coast) {
 		this.coast = coast;
 	}
+
 	public Integer getId() {
 		return id;
 	}

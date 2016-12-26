@@ -14,7 +14,7 @@ import javaCourse.levelTwo.dao.BaseDao;
 import javaCourse.levelTwo.dao.ReaderDao;
 import javaCourse.levelTwo.entity.Reader;
 
-@Repository("readerDao")
+@Repository
 public class ReaderDaoImpl extends BaseDao<Reader> implements ReaderDao<Reader> {
 	private static Logger log = Logger.getLogger(ReaderDaoImpl.class);
 
@@ -41,5 +41,14 @@ public class ReaderDaoImpl extends BaseDao<Reader> implements ReaderDao<Reader> 
 		Reader reader = (Reader) criteria.uniqueResult();
 		log.info("Find reader with login" + login);
 		return reader;
+	}
+
+	@Override
+	public void deleteById(int id) {
+		Criteria criteria = getSession().createCriteria(Reader.class);
+		criteria.add(Restrictions.eq("id", id));
+		Reader reader = (Reader) criteria.uniqueResult();
+		delete(reader);
+		log.info("Delete" + reader);
 	}
 }

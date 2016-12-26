@@ -47,4 +47,10 @@ public class ReaderServiceImpl extends BaseService<Reader> implements ReaderServ
 		}
 		return resalt;
 	}
+
+	@Override
+	public void deleteById(int id) {
+		readerDao.deleteById(id);
+		log.info("Delete rreader: " + id);
+	}
 }

@@ -12,7 +12,7 @@ import javaCourse.levelTwo.dao.BaseDao;
 import javaCourse.levelTwo.dao.SubscriptionDao;
 import javaCourse.levelTwo.entity.Subscription;
 
-@Repository("subscriptionDao")
+@Repository
 public class SubscriptionDaoImpl extends BaseDao<Subscription> implements SubscriptionDao<Subscription> {
 	private static Logger log = Logger.getLogger(SubscriptionDaoImpl.class);
 

@@ -36,7 +36,7 @@
 	</head>
 	<body>
 		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian </a>
-		<h2><spring:message code="allpage.periodicals"/></h2>
+		<h3><spring:message code="allpage.periodicals"/></h3>
 		
 		<table>
 		<caption>Список периодических изданий</caption>
@@ -68,6 +68,8 @@
 						<label for="${ status.count }" >Нажмите чтобы подписаться на периодическое издание</label>
 						<form name="subscriptionCreate" method="get" action="subscriptionCreate">
 		 					<input type="hidden" name="idPeriodicEdition" value="${ periodicEdition.id }"/>
+		 					<input type="hidden" name="username" value="<sec:authentication property="principal.username"/>"/>
+		 					
 		 					<select name="period" required="required">
 								<option value="1" selected="selected">месяц</option>
 								<option value="3">квартал</option>

@@ -26,4 +26,13 @@ public class SubscriptionServiceImpl extends BaseService<Subscription> implement
 		log.info("Find all subscriptions");
 		return subscriptions;
 	}
+
+	@Override
+	public Subscription create(Subscription subscription) {
+		if (subscription != null) {
+			return (Subscription) subscriptionDao.add(subscription);
+		}
+		log.info("Create subscription: " + subscription);
+		return subscription;
+	}
 }

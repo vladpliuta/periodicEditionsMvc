@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian </a>
-		<h2><spring:message code="allpage.periodicals"/></h2>
+		<h3><spring:message code="allpage.periodicals"/></h3>
 	
 		<c:url var="loginUrl" value="/login" />
 		<form action="${loginUrl}" method="post">

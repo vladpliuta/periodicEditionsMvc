@@ -22,7 +22,8 @@
 		</style>	
 	</head>
 	<body>
-		<h3>Периодические издания</h3>
+		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian </a>
+		<h2><spring:message code="allpage.periodicals"/></h2>
 		<table>
 		<caption>Список пользователей</caption>
 			<tr>
@@ -30,24 +31,23 @@
 				<th>Фамилия</th>
 				<th>Имя</th>
 				<th>Логин</th>
-				
+				<th>Удалить</th>
 			</tr>
-			<c:forEach var="user" items="${usersList}" varStatus="status">
+			<c:forEach var="reader" items="${readers}" varStatus="status">
 				<tr>
 					<td><c:out value="${ status.count }" /></td>
-					<td><c:out value="${ user.surname }" /></td>
-					<td><c:out value="${ user.forename }"/></td>
-					<td><c:out value="${ user.login }"/></td>
+					<td><c:out value="${ reader.surname }" /></td>
+					<td><c:out value="${ reader.forename }"/></td>
+					<td><c:out value="${ reader.login }"/></td>
+					<td><c:url var="delete_but" value="/delete/reader-${reader.login}"/>
+           				<a href="${delete_but}" role="button">Удалить</a><td>
 				</tr>
 			</c:forEach>
 			
 				
 		</table>
 		<br/><br/><br/>
-		<form name="Logout" method="POST" action="controller">
-			<input type="hidden" name="command" value="logout"/>
-			Выйти из программы:<br/>
-			<input type="submit" value="logout"/>
-		</form>
+		<c:url var="logout_but" value="/logout"/>
+        <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>
 </html>

@@ -35,13 +35,21 @@
 		</style>	
 	</head>
 	<body>
-		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian </a>
-		<h2><spring:message code="allpage.periodicals"/></h2>
-		
+		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian</a>
+		<h3><spring:message code="allpage.periodicals"/></h3>
+		<form name="page" method="get" action="page">
+    		Выбирите число изданий на странице:
+   			<div>
+            	<select name="periodicalsNumber" required="required">
+               		 <option value="4" selected="selected">4</option>
+               		 <option value="5">5</option>
+               		 <option value="10">10</option>
+           		</select> </div> 
+    		<input type="submit" value="Выбрать"/>
+		</form>
 		<table>
 		<caption>Список периодических изданий</caption>
 			<tr>
-				<th>№п/п</th>
 				<th style="width:5em">ISSN</th>
 				<th>Название</th>
 				<th style="width:5em">Кол-во выпусков в месяц</th>
@@ -49,9 +57,8 @@
 				<th style="width:5em">Скидка на квартал</th>
 				<th style="width:5em">Скидка на полугодие</th>
 			</tr>
-			<c:forEach var="periodicEdition" items="${periodicEditionsList}" varStatus="status">
+			<c:forEach var="periodicEdition" items="${periodicEditionsList}">
 				<tr>
-					<td rowspan="3"><c:out value="${ status.count }" /></td>
 					<td><c:out value="${ periodicEdition.id }" /></td>
 					<th><c:out value="${ periodicEdition.title }"/></th>
 					<td><c:out value="${ periodicEdition.monthPeriodicity }" /></td>
@@ -64,7 +71,7 @@
 				</tr>
 				<tr>
 					<td colspan="6">
-						<c:url var="delete_but" value="/delete-${periodicEdition.id}"/>
+						<c:url var="delete_but" value="/delete/periodic-${periodicEdition.id}"/>
            				<a href="${delete_but}" role="button">Удалить</a>
 					</td>
 				</tr>
@@ -96,8 +103,23 @@
 				</td>
 			</tr>
 		</table>
-		
-		<br/><br/><br/>
+		<br/>
+		<c:choose>
+   			 <c:when test="${currentPage != 1}">
+        		<a href="pageNumber?currentPage=${currentPage - 1}&periodicalsNumber=${periodicalsNumber}">Предидущий</a>
+       		</c:when>
+    		<c:when test="${currentPage == 1}">Предидущий</c:when>
+    	</c:choose>
+    	<c:forEach begin="1" end="${pagesCount-0}" var="i">
+       			 <a href="pageNumber?currentPage=${i}&periodicalsNumber=${periodicalsNumber}">${i}</a>
+		</c:forEach>
+    	<c:choose>
+    		<c:when test="${currentPage lt pagesCount}">
+       			<a href="pageNumber?currentPage=${currentPage + 1}&periodicalsNumber=${periodicalsNumber}">Следующая</a>
+         	</c:when>
+    		<c:when test="${currentPage == pagesCount}">Следующая</c:when>
+    	</c:choose>
+    	<br/><br/><br/>
 		<c:url var="logout_but" value="/logout"/>
         <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>

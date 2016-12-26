@@ -30,7 +30,7 @@ public class Address implements Serializable {
 	@Column(name = "id_address", unique = true, nullable = false)
 	private Integer id;
 
-	@Column(length = 6)
+	@Column
 	private Integer postcode;
 	@Column
 	private String city;
@@ -40,11 +40,19 @@ public class Address implements Serializable {
 	private String house;
 	@Column
 	private Integer flat;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "address")
 	private Set<Reader> readers;
 
 	public Address() {
+	}
+
+	public Address(int postcode, String city, String street, String house, int flat) {
+		this.postcode = postcode;
+		this.city = city;
+		this.street = street;
+		this.house = house;
+		this.flat = flat;
 	}
 
 	public Integer getId() {
