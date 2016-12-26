@@ -2,6 +2,8 @@ package javaCourse.levelTwo.dao.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +62,9 @@ public class SubscriptionDaoImplTest {
 		Subscription subscriptionExpected = (Subscription) subscriptionDao.get(idActual);
 		assertNull(subscriptionExpected);
 	}
+	@Test
+    public void testFindAll(){
+	    List<Subscription> subscriptions = subscriptionDao.findAll();
+        assertEquals(0, subscriptions.size());
+    }
 }

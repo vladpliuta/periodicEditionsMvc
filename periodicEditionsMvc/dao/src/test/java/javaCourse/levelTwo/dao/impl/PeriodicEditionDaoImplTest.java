@@ -1,8 +1,11 @@
 package javaCourse.levelTwo.dao.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,4 +88,19 @@ public class PeriodicEditionDaoImplTest {
 		assertNotNull(periodicEditionExpected);
 		assertTrue("The expected result is not obtained", periodicEditionExpected.equals(periodicEditionActual));
 	}
+	@Test
+    public void testFindAll(){
+	    List<PeriodicEdition> periodicEditions = periodicEditionDao.findAll();
+        assertEquals(0, periodicEditions.size());
+    }
+	@Test
+    public void testFindAllTwo(){
+		List<PeriodicEdition> periodicEditions = periodicEditionDao.findAll(1,1);
+        assertEquals(0, periodicEditions.size());
+    }
+	@Test
+    public void testGetCount(){
+		 long amount = periodicEditionDao.getCount();
+	        assertEquals(0, amount);
+    }
 }

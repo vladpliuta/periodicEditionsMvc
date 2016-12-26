@@ -1,8 +1,11 @@
 package javaCourse.levelTwo.dao.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,4 +86,9 @@ public class ReaderDaoImplTest {
 		assertNotNull(readerExpected);
 		assertTrue("The expected result is not obtained", readerExpected.equals(readerActual));
 	}
+	@Test
+    public void testFindAll(){
+	    List<Reader> readers = readerDao.findAll();
+        assertEquals(0, readers.size());
+    }
 }
