@@ -39,7 +39,7 @@
 		<h3><spring:message code="allpage.periodicals"/></h3>
 		
 		<table>
-		<caption>Список периодических изданий</caption>
+		<caption><spring:message code="allpage.periodicalsList"/></caption>
 			<tr>
 				<th>№п/п</th>
 				<th style="width:5em">ISSN</th>
@@ -83,8 +83,10 @@
 			</c:forEach>
 			
 		</table>
-		<br/><br/><br/>
-		
+		<br/><br/>
+		<c:url var="home_but" value="/welcome"/>
+        <p><a  href="${home_but}" role="button"><spring:message code="allpage.home"/></a></p>
+    	<br/>
 		<c:url var="logout_but" value="/logout"/>
         <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>

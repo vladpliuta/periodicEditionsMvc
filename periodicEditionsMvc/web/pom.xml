@@ -50,7 +50,7 @@
         </plugins>
     </pluginManagement>
     
-    <finalName>web</finalName>
+    <finalName>periodicals</finalName>
   </build>
   
 </project>

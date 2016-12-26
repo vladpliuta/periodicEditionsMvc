@@ -38,17 +38,18 @@
 		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian</a>
 		<h3><spring:message code="allpage.periodicals"/></h3>
 		<form name="page" method="get" action="page">
-    		Выбирите число изданий на странице:
+    		<spring:message code="pagin.periodicalsNumber"/>
    			<div>
             	<select name="periodicalsNumber" required="required">
-               		 <option value="4" selected="selected">4</option>
+               		<option>${periodicalsNumber}</option>
+               		 <option value="4">4</option>
                		 <option value="5">5</option>
                		 <option value="10">10</option>
            		</select> </div> 
-    		<input type="submit" value="Выбрать"/>
+    		<input type="submit" value="<spring:message code="pagin.select"/>"/>
 		</form>
 		<table>
-		<caption>Список периодических изданий</caption>
+		<caption><spring:message code="allpage.periodicalsList"/></caption>
 			<tr>
 				<th style="width:5em">ISSN</th>
 				<th>Название</th>
@@ -72,7 +73,7 @@
 				<tr>
 					<td colspan="6">
 						<c:url var="delete_but" value="/delete/periodic-${periodicEdition.id}"/>
-           				<a href="${delete_but}" role="button">Удалить</a>
+           				<a href="${delete_but}" role="button"><spring:message code="allpage.delete"/></a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -108,7 +109,7 @@
    			 <c:when test="${currentPage != 1}">
         		<a href="pageNumber?currentPage=${currentPage - 1}&periodicalsNumber=${periodicalsNumber}">Предидущий</a>
        		</c:when>
-    		<c:when test="${currentPage == 1}">Предидущий</c:when>
+    		<c:when test="${currentPage == 1}"><spring:message code="pagin.previous"/></c:when>
     	</c:choose>
     	<c:forEach begin="1" end="${pagesCount-0}" var="i">
        			 <a href="pageNumber?currentPage=${i}&periodicalsNumber=${periodicalsNumber}">${i}</a>
@@ -117,9 +118,12 @@
     		<c:when test="${currentPage lt pagesCount}">
        			<a href="pageNumber?currentPage=${currentPage + 1}&periodicalsNumber=${periodicalsNumber}">Следующая</a>
          	</c:when>
-    		<c:when test="${currentPage == pagesCount}">Следующая</c:when>
+    		<c:when test="${currentPage == pagesCount}"><spring:message code="pagin.next"/></c:when>
     	</c:choose>
-    	<br/><br/><br/>
+    	<br/><br/>
+		<c:url var="home_but" value="/welcome"/>
+        <p><a  href="${home_but}" role="button"><spring:message code="allpage.home"/></a></p>
+    	<br/>
 		<c:url var="logout_but" value="/logout"/>
         <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>

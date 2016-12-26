@@ -183,7 +183,7 @@
   </modules>
  
  	<build>
-    <finalName>periodicEditionsMvc</finalName>
+    	<finalName>periodicEditionsMvc</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -207,6 +207,15 @@
                     <warFile>target/${project.build.finalName}.war</warFile>
                 </configuration>
              </plugin>
-        </plugins>
+          </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

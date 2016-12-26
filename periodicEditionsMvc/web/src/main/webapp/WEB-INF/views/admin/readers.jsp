@@ -25,7 +25,7 @@
 		<a href="?mylocale=en">English </a> | <a href="?mylocale=ru">Russian </a>
 		<h2><spring:message code="allpage.periodicals"/></h2>
 		<table>
-		<caption>Список пользователей</caption>
+		<caption><spring:message code="page.readers.users"/></caption>
 			<tr>
 				<th>№п/п</th>
 				<th>Фамилия</th>
@@ -40,13 +40,16 @@
 					<td><c:out value="${ reader.forename }"/></td>
 					<td><c:out value="${ reader.login }"/></td>
 					<td><c:url var="delete_but" value="/delete/reader-${reader.login}"/>
-           				<a href="${delete_but}" role="button">Удалить</a><td>
+           				<a href="${delete_but}" role="button"><spring:message code="allpage.delete"/></a><td>
 				</tr>
 			</c:forEach>
 			
 				
 		</table>
-		<br/><br/><br/>
+		<br/><br/>
+		<c:url var="home_but" value="/welcome"/>
+        <p><a  href="${home_but}" role="button"><spring:message code="allpage.home"/></a></p>
+    	<br/>
 		<c:url var="logout_but" value="/logout"/>
         <p><a  href="${logout_but}" role="button"><spring:message code="allpage.LogOut"/></a></p>
 	</body>
